@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { Contato, ContatoService } 
+  from 'src/app/servicos/contato.service';
 
 @Component({
   selector: 'app-contatos',
@@ -11,10 +13,17 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class ContatosPage implements OnInit {
+  contatos: Contato[] = [];
 
-  constructor() { }
+  constructor(private service: ContatoService) {}
+
 
   ngOnInit() {
+    this.service.listar().subscribe(abc => {
+      this.contatos = abc;
+      console.log(this.contatos);
+    });
+    
   }
 
 }

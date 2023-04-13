@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 export interface Contato{
   id?: string;
@@ -21,9 +22,12 @@ export class ContatoService {
     return addDoc(contatos, obj);
   }  
 
-  listar(){
-    const contatos = collection(this.firestore, this.colecao);
-
+  listar():Observable<Contato[]>{
+    const contatos = collection(this.firestore, 
+        this.colecao);
+        
+    return collectionData(contatos, 
+      {idField:'id'}) as Observable<Contato[]>;
   }
 
 }
