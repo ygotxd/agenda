@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { Contato, ContatoService } 
   from 'src/app/servicos/contato.service';
 
@@ -15,7 +15,8 @@ import { Contato, ContatoService }
 export class ContatosPage implements OnInit {
   contatos: Contato[] = [];
 
-  constructor(private service: ContatoService) {}
+  constructor(private service: ContatoService,
+              private nav: NavController) {}
 
 
   ngOnInit() {
@@ -26,4 +27,12 @@ export class ContatosPage implements OnInit {
     
   }
 
+  novo(){
+    this.nav.navigateForward("incluircontato");
+  }
+
+  iniciarEdicao(id:any){
+    this.nav.navigateForward(["incluircontato",
+     {idcontato: id}]);
+  }
 }

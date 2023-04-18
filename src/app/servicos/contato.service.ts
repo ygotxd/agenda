@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { addDoc, doc, collection, collectionData, Firestore, docData, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Contato{
@@ -30,6 +30,23 @@ export class ContatoService {
       {idField:'id'}) as Observable<Contato[]>;
   }
 
+  buscar(id:any):Observable<Contato>{
+    const contatos = doc(this.firestore, 
+      this.colecao + '/' + id);
+    
+      return docData(contatos, 
+        {idField: 'id'}) as Observable<Contato>;
+  }
+
+  alterar(obj: any){
+    const contatos = doc(this.firestore, 
+      this.colecao + '/' + obj.id );
+
+    return updateDoc(contatos, {
+      nome: obj.nome, email: obj.email, 
+      telefone: obj.telefone
+    });  
+  }
 }
 
 
